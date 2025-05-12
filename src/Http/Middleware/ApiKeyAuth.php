@@ -21,6 +21,7 @@ class ApiKeyAuth
     {
         // If the request is from an authenticated user viewing the dashboard
         // Allow them to bypass API key authentication
+
         if (auth()->check() && $request->header('X-Dashboard-Request') === 'true') {
             $siteId = $request->query('site_id');
 
