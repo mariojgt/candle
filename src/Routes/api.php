@@ -17,6 +17,7 @@ Route::middleware([ApiKeyAuth::class, 'web'])->group(function () {
     Route::get('/analytics/pageviews', [EventController::class, 'pageviews'])->name('candle.pageviews');
     Route::get('/analytics/unique-visitors', [EventController::class, 'uniqueVisitors'])->name('candle.unique-visitors');
     Route::get('/analytics/sessions', [EventController::class, 'sessions'])->name('candle.sessions');
+    Route::get('/analytics/sessions/data', [EventController::class, 'sessionsData'])->name('candle.sessions.data');
     Route::get('/analytics/retention', [EventController::class, 'retention'])->name('candle.retention');
     Route::get('/analytics/top-pages', [EventController::class, 'topPages'])->name('candle.top-pages');
     Route::get('/analytics/referrers', [EventController::class, 'referrers'])->name('candle.referrers');

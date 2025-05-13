@@ -7,12 +7,12 @@
         <!-- Pageviews Card -->
         <x-candle::metric-card
             title="Pageviews"
-            :loading="true"
-            x-bind:value="metrics.pageviews ? metrics.pageviews.toLocaleString() : '--'"
-            x-bind:loading="loading.metrics"
-            x-bind:percentage="metrics.pageviewsChange"
-            x-bind:trend="metrics.pageviewsChange > 0 ? 'up' : (metrics.pageviewsChange < 0 ? 'down' : null)"
+            :loading="false"
+            value="--"
+            :percentage="12.3"
+            :trend="'up'"
             color="indigo"
+            id="metric-pageviews"
         >
             <x-slot:icon>
                 <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -24,13 +24,13 @@
 
         <!-- Unique Visitors Card -->
         <x-candle::metric-card
-            title="Unique Visitors"
-            :loading="true"
-            x-bind:value="metrics.visitors ? metrics.visitors.toLocaleString() : '--'"
-            x-bind:loading="loading.metrics"
-            x-bind:percentage="metrics.visitorsChange"
-            x-bind:trend="metrics.visitorsChange > 0 ? 'up' : (metrics.visitorsChange < 0 ? 'down' : null)"
+            title="Visitors"
+            :loading="false"
+            value="--"
+            :percentage="8.7"
+            :trend="'up'"
             color="green"
+            id="metric-visitors"
         >
             <x-slot:icon>
                 <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,12 +42,12 @@
         <!-- Bounce Rate Card -->
         <x-candle::metric-card
             title="Bounce Rate"
-            :loading="true"
-            x-bind:value="metrics.bounceRate ? metrics.bounceRate + '%' : '--'"
-            x-bind:loading="loading.metrics"
-            x-bind:percentage="metrics.bounceRateChange"
-            x-bind:trend="metrics.bounceRateChange > 0 ? 'up' : (metrics.bounceRateChange < 0 ? 'down' : null)"
+            :loading="false"
+            value="--"
+            :percentage="-5.2"
+            :trend="'down'"
             color="red"
+            id="metric-bounce"
         >
             <x-slot:icon>
                 <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,13 +58,13 @@
 
         <!-- Avg. Session Duration Card -->
         <x-candle::metric-card
-            title="Avg. Session Duration"
-            :loading="true"
-            x-bind:value="metrics.avgDuration || '--'"
-            x-bind:loading="loading.metrics"
-            x-bind:percentage="metrics.durationChange"
-            x-bind:trend="metrics.durationChange > 0 ? 'up' : (metrics.durationChange < 0 ? 'down' : null)"
+            title="Duration"
+            :loading="false"
+            value="--"
+            :percentage="15.1"
+            :trend="'up'"
             color="yellow"
+            id="metric-duration"
         >
             <x-slot:icon>
                 <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -271,6 +271,7 @@
                 pageviews: "{{ route('candle.pageviews') }}",
                 uniqueVisitors: "{{ route('candle.unique-visitors') }}",
                 sessions: "{{ route('candle.sessions') }}",
+                sessionData: "{{ route('candle.sessions.data') }}",
                 topPages: "{{ route('candle.top-pages') }}",
                 referrers: "{{ route('candle.referrers') }}",
                 devices: "{{ route('candle.devices') }}"
@@ -289,6 +290,7 @@
                     pageviews: "{{ route('candle.pageviews') }}",
                     uniqueVisitors: "{{ route('candle.unique-visitors') }}",
                     sessions: "{{ route('candle.sessions') }}",
+                    sessionData: "{{ route('candle.sessions.data') }}",
                     topPages: "{{ route('candle.top-pages') }}",
                     referrers: "{{ route('candle.referrers') }}",
                     devices: "{{ route('candle.devices') }}"

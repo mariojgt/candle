@@ -141,7 +141,7 @@
                     this.loading = true;
                 }
 
-                const url = "{{ route('candle.sessions') }}?site_id={{ $site->id }}";
+                const url = "{{ route('candle.sessions.data') }}?site_id={{ $site->id }}";
 
                 fetch(url, window.ajaxSetup())
                     .then(response => response.json())

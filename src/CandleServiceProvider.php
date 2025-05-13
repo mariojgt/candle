@@ -29,10 +29,9 @@ class CandleServiceProvider extends ServiceProvider
             __DIR__ . '/Resources/views' => resource_path('views/vendor/candle'),
         ], 'views');
 
-        // Publish assets
+        // Public the dashboard.js to the public path
         $this->publishes([
-            __DIR__ . '/Resources/js' => public_path('vendor/candle/js'),
-            __DIR__ . '/Resources/assets' => public_path('vendor/candle/assets'),
+            __DIR__ . '/Public/dashboard.js' => public_path('vendor/candle/js/dashboard.js'),
         ], 'assets');
 
         // Load views

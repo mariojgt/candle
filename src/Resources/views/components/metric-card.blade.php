@@ -6,6 +6,7 @@
     'loading' => false,
     'percentage' => null,
     'trend' => null,
+    'id' => null, // Add ID attribute for targeting with JavaScript
 ])
 
 @php
@@ -55,9 +56,14 @@
     ];
 
     $colorClasses = $colors[$color] ?? $colors['indigo'];
+
+    // Generate a unique ID if none provided
+    $metricId = $id ?? 'metric-' . strtolower(str_replace(' ', '-', $title));
+    $valueId = $metricId . '-value';
+    $percentageId = $metricId . '-percentage';
 @endphp
 
-<div class="bg-white overflow-hidden shadow rounded-lg group hover:shadow-md transition-all duration-300 animate-on-scroll">
+<div class="bg-white overflow-hidden shadow rounded-lg group hover:shadow-md transition-all duration-300 animate-on-scroll" id="{{ $metricId }}">
     <div class="px-4 py-5 sm:p-6">
         <div class="flex items-center">
             @if($icon)
@@ -76,12 +82,12 @@
                             <div class="animate-pulse h-7 w-16 mt-1 bg-gray-200 rounded"></div>
                         @else
                             <div class="flex items-baseline">
-                                <div class="text-2xl font-semibold text-gray-900">
+                                <div class="text-2xl font-semibold text-gray-900" id="{{ $valueId }}">
                                     {{ $value }}
                                 </div>
 
                                 @if($percentage !== null)
-                                    <span class="ml-2 text-sm font-medium {{ $trend === 'up' ? $colorClasses['trend_up'] : ($trend === 'down' ? $colorClasses['trend_down'] : 'text-gray-500') }} flex items-center">
+                                    <span class="ml-2 text-sm font-medium {{ $trend === 'up' ? $colorClasses['trend_up'] : ($trend === 'down' ? $colorClasses['trend_down'] : 'text-gray-500') }} flex items-center" id="{{ $percentageId }}">
                                         @if($trend === 'up')
                                             <svg class="self-center flex-shrink-0 h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
