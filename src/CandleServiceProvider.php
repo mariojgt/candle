@@ -79,13 +79,6 @@ class CandleServiceProvider extends ServiceProvider
         Route::group($this->routeWebConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__ . '/Routes/web.php');
         });
-
-        // Load the test routes if the application is in local environment
-        if ($this->app->environment('local')) {
-            Route::group($this->routeWebConfiguration(), function () {
-                $this->loadRoutesFrom(__DIR__ . '/Routes/test.php');
-            });
-        }
     }
 
     /**

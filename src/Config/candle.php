@@ -89,7 +89,7 @@ return [
     | Middleware to be applied to the dashboard routes.
     |
     */
-    'middleware' => ['web', 'auth', \Mariojgt\Candle\Http\Middleware\VerifySiteOwnership::class],
+    'middleware' => ['web', 'auth'],
 
     /*
     |--------------------------------------------------------------------------
