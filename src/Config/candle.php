@@ -89,5 +89,31 @@ return [
     | Middleware to be applied to the dashboard routes.
     |
     */
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth', \Mariojgt\Candle\Http\Middleware\VerifySiteOwnership::class],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Magic Link Settings
+    |--------------------------------------------------------------------------
+    |
+    | Settings for magic link authentication.
+    |
+    */
+    'magic_links' => [
+        'enabled' => true,
+        'expires_in' => 15, // minutes
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Multi-tenant Settings
+    |--------------------------------------------------------------------------
+    |
+    | Settings for multi-tenant functionality.
+    |
+    */
+    'multi_tenant' => [
+        'enabled' => true,
+        'enforce_ownership' => true, // Ensure users can only access their own sites
+    ],
 ];

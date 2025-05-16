@@ -1,13 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Mariojgt\Candle\Models\Site;
+use Mariojgt\Candle\Http\Controllers\Auth\AuthController;
 use Mariojgt\Candle\Http\Controllers\SiteController;
 use Mariojgt\Candle\Http\Controllers\ApiKeyController;
 use Mariojgt\Candle\Http\Controllers\DashboardController;
+use Mariojgt\Candle\Http\Controllers\EventController;
+use Mariojgt\Candle\Models\Site;
+
+// Authentication Routes (no auth required)
+Route::prefix('candle')->name('candle.auth.')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/magic-link', [AuthController::class, 'requestMagicLink'])->name('request-magic-link');
+    Route::get('/magic-link/{token}', [AuthController::class, 'processMagicLink'])->name('magic-link');
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
 
 // Dashboard routes - protected by Laravel's auth system
 Route::middleware(config('candle.middleware'))->prefix('candle')->group(function () {
+    // Logout route
+    Route::post('/logout', [AuthController::class, 'logout'])->name('candle.auth.logout');
+
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('candle.dashboard');
 
@@ -20,6 +35,7 @@ Route::middleware(config('candle.middleware'))->prefix('candle')->group(function
         Route::get('/{site}/edit', [SiteController::class, 'edit'])->name('edit');
         Route::put('/{site}', [SiteController::class, 'update'])->name('update');
         Route::delete('/{site}', [SiteController::class, 'destroy'])->name('destroy');
+        Route::get('/{site}/tracking-code', [SiteController::class, 'getTrackingCode'])->name('tracking-code');
     });
 
     // API Key management
@@ -34,10 +50,12 @@ Route::middleware(config('candle.middleware'))->prefix('candle')->group(function
     });
 });
 
+// Public tracker.js route
 Route::get('/tracker.js', function () {
     $siteId = request('site_id');
     $site = Site::findOrFail($siteId);
     $apiKey = $site->apiKeys()->where('active', true)->first();
+
     if (!$apiKey) {
         abort(403, 'API key not found or inactive.');
     }
@@ -53,3 +71,8 @@ Route::get('/tracker.js', function () {
         ])
         ->header('Content-Type', 'application/javascript');
 })->name('candle.tracker');
+
+// API Routes for collecting events
+Route::prefix(config('candle.route_prefix'))->group(function () {
+    Route::post('/', [EventController::class, 'store']);
+});
