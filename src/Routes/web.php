@@ -71,8 +71,3 @@ Route::get('/tracker.js', function () {
         ])
         ->header('Content-Type', 'application/javascript');
 })->name('candle.tracker');
-
-// API Routes for collecting events
-Route::prefix(config('candle.route_prefix'))->group(function () {
-    Route::post('/', [EventController::class, 'store']);
-});
